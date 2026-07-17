@@ -820,16 +820,23 @@ button {
     }
     
     .floating-controls-wrapper {
-        bottom: 24px;
+        right: 12px;
     }
     
     .floating-controls {
-        padding: 6px;
+        padding: 8px 6px;
+        gap: 8px;
+        border-radius: 30px;
     }
     
     .control-btn {
-        width: 38px;
-        height: 38px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .control-btn svg {
+        width: 18px;
+        height: 18px;
     }
     
     .glass-btn {
