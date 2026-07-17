@@ -1,0 +1,736 @@
+/* ==========================================================================
+   CSS VARIABLES & GLOBAL RESET
+   ========================================================================== */
+:root {
+    --gold: #E8B953;
+    --gold-hover: #F9D079;
+    --dark-bg: #0a0a0c;
+    --dark-glass: rgba(15, 15, 18, 0.7);
+    --light-glass: rgba(255, 255, 255, 0.1);
+    --border-glass: rgba(255, 255, 255, 0.15);
+    --text-main: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    
+    --font-sans: 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--dark-bg);
+    color: var(--text-main);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    font-family: inherit;
+    outline: none;
+    border: none;
+}
+
+/* ==========================================================================
+   LOADING SCREEN
+   ========================================================================== */
+#loadingScreen {
+    position: fixed;
+    inset: 0;
+    background: var(--dark-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    border-top-color: var(--gold);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 20px;
+}
+
+#loadingScreen p {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   LANDING PAGE
+   ========================================================================== */
+#landingPage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 100;
+}
+
+.landing-background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,12,0.3), rgba(10,10,12,0.9)), url('../panoramas/depan.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    transform: scale(1.05);
+    animation: slowZoom 20s infinite alternate linear;
+}
+
+@keyframes slowZoom {
+    0% { transform: scale(1.05); }
+    100% { transform: scale(1.15); }
+}
+
+.landing-content {
+    max-width: 800px;
+    padding: 40px;
+    background: rgba(10, 10, 12, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(232, 185, 83, 0.15);
+    color: var(--gold);
+    border: 1px solid rgba(232, 185, 83, 0.3);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    background: linear-gradient(to right, #fff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    font-weight: 300;
+    max-width: 600px;
+    margin-inline: auto;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    background: var(--gold);
+    color: var(--dark-bg);
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 30px rgba(232, 185, 83, 0.3);
+}
+
+.btn-primary:hover {
+    background: var(--gold-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(232, 185, 83, 0.5);
+}
+
+/* ==========================================================================
+   VIEWER SECTION & HEADER
+   ========================================================================== */
+#tourContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+#panorama {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================================
+   PANNELLUM STACKING & CLICK FIX
+   Memastikan hotspot selalu bisa diklik di atas panorama.
+   ============================================================ */
+
+/* Hotspot harus punya z-index lebih tinggi dari dragfix */
+.pnlm-hotspot-base {
+    z-index: 2 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Dragfix (lapisan transparan Pannellum untuk drag/rotate) 
+   TIDAK BOLEH menghalangi klik pada hotspot */
+.pnlm-dragfix {
+    z-index: 1 !important;
+}
+
+/* Penjernihan panorama - ditargetkan hanya ke canvas, 
+   TIDAK mempengaruhi lapisan hotspot di atasnya */
+.pnlm-render-container canvas {
+    filter: contrast(1.15) saturate(1.25) brightness(1.04) drop-shadow(0 0 0 transparent);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.tour-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1000;
+    pointer-events: none; /* Let clicks pass through empty areas */
+}
+
+.header-left, .header-right {
+    pointer-events: auto;
+}
+
+.header-left {
+    background: var(--dark-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 16px 24px;
+    border-radius: 20px;
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.header-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 4px;
+}
+
+.header-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.header-right {
+    display: flex;
+    gap: 12px;
+}
+
+.glass-btn {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.glass-btn:hover {
+    background: var(--light-glass);
+    border-color: rgba(255,255,255,0.4);
+    transform: translateY(-3px);
+    color: var(--gold);
+}
+
+.glass-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* ==========================================================================
+   SIDEBAR MENU (MAP)
+   ========================================================================== */
+.scene-menu {
+    position: absolute;
+    top: 0;
+    right: -400px; /* Hidden by default */
+    width: 100%;
+    max-width: 360px;
+    height: 100vh;
+    background: rgba(10, 10, 12, 0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-left: 1px solid var(--border-glass);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+}
+
+.scene-menu.is-open {
+    right: 0;
+}
+
+.menu-header {
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.menu-header h3 {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    color: var(--gold);
+}
+
+.icon-btn {
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 32px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.icon-btn:hover {
+    color: white;
+    transform: rotate(90deg);
+}
+
+.menu-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-list::-webkit-scrollbar {
+    width: 6px;
+}
+.menu-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+.scene-btn {
+    width: 100%;
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    color: var(--text-muted);
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.scene-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+    color: white;
+    transform: translateX(5px);
+}
+
+.scene-btn.active {
+    background: rgba(232, 185, 83, 0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* ==========================================================================
+   FLOATING CONTROLS (BOTTOM)
+   ========================================================================== */
+.floating-controls-wrapper {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.floating-controls {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--dark-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 100px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.control-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border-glass);
+    margin: 0 4px;
+}
+
+.control-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.control-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.control-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.control-btn.active {
+    color: var(--gold);
+    background: rgba(232, 185, 83, 0.1);
+}
+
+/* ==========================================================================
+   HOTSPOTS (Navigation)
+   ========================================================================== */
+.tour-hotspot-wrapper {
+    width: 80px;
+    height: 80px;
+    margin-left: -40px;
+    margin-top: -40px;
+}
+
+.tour-hotspot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: none;
+    backdrop-filter: none;
+    transition: var(--transition-smooth);
+}
+
+@keyframes moveForward {
+    0% { 
+        transform: translateY(12px); 
+        opacity: 0; 
+    }
+    30% { 
+        opacity: 1; 
+    }
+    70% { 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateY(-12px); 
+        opacity: 0; 
+    }
+}
+
+.tour-hotspot::before {
+    display: none;
+}
+
+.tour-hotspot:hover {
+    background: transparent;
+    color: var(--gold);
+    box-shadow: none;
+    animation-play-state: paused;
+}
+
+.tour-hotspot:hover::before {
+    opacity: 1;
+    transform: scale(1);
+    animation: ripple 1.5s infinite;
+}
+
+@keyframes ripple {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+.tour-hotspot-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition-fast);
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8)) drop-shadow(0 0 12px rgba(0,0,0,0.6));
+    animation: moveForward 1.5s infinite linear;
+}
+
+.tour-hotspot:hover .tour-hotspot-arrow {
+    transform: translateY(-3px);
+}
+
+.tour-hotspot-label {
+    position: absolute;
+    left: 50%;
+    top: -65px;
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+    padding: 12px 20px;
+    background: var(--dark-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.tour-hotspot:hover .tour-hotspot-label {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Info Hotspot */
+.info-hotspot-wrapper {
+    width: 36px;
+    height: 36px;
+    margin-left: -18px;
+    margin-top: -18px;
+}
+
+.info-hotspot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--dark-bg);
+    cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(232, 185, 83, 0.3);
+}
+
+.info-hotspot:hover {
+    box-shadow: 0 0 0 8px rgba(232, 185, 83, 0.2);
+    background: var(--white);
+    color: var(--gold);
+}
+
+.info-hotspot-icon {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 20px;
+    font-style: italic;
+}
+
+/* ==========================================================================
+   MODALS (Info & Lightbox)
+   ========================================================================== */
+.modal-overlay, .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-smooth);
+}
+
+.modal-overlay.is-active, .lightbox-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--dark-bg);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 24px;
+    border: 1px solid var(--border-glass);
+    overflow: hidden;
+    transform: scale(0.95) translateY(20px);
+    transition: var(--transition-smooth);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.modal-overlay.is-active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close, .lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition-fast);
+}
+
+.modal-close:hover, .lightbox-close:hover {
+    background: var(--gold);
+    color: var(--dark-bg);
+}
+
+.modal-image-wrapper {
+    width: 100%;
+    height: 240px;
+    background: #111;
+    overflow: hidden;
+}
+
+#infoImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: zoom-in;
+    transition: transform 0.5s ease;
+}
+
+#infoImage:hover {
+    transform: scale(1.05);
+}
+
+.modal-body {
+    padding: 32px;
+}
+
+#infoTitle {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 12px;
+}
+
+#infoDescription {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* Lightbox */
+#lightboxImage {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    transform: scale(0.95);
+    transition: var(--transition-smooth);
+}
+
+.lightbox-overlay.is-active #lightboxImage {
+    transform: scale(1);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+    .tour-header {
+        padding: 16px;
+    }
+    
+    .header-left {
+        padding: 12px 16px;
+    }
+    
+    .header-title {
+        font-size: 16px;
+    }
+    
+    .floating-controls-wrapper {
+        bottom: 24px;
+    }
+    
+    .floating-controls {
+        padding: 6px;
+    }
+    
+    .control-btn {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .glass-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
