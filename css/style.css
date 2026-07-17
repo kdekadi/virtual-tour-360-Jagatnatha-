@@ -389,66 +389,74 @@ button {
 }
 
 /* ==========================================================================
-   FLOATING CONTROLS (BOTTOM)
+   FLOATING CONTROLS
    ========================================================================== */
 .floating-controls-wrapper {
     position: absolute;
-    bottom: 32px;
-    left: 0;
-    width: 100%;
+    top: 50%;
+    right: 32px;
+    transform: translateY(-50%);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     z-index: 1000;
     pointer-events: none;
 }
 
 .floating-controls {
-    pointer-events: auto;
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px;
-    background: var(--dark-glass);
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 12px;
+    background: rgba(15, 15, 15, 0.4);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border-glass);
-    border-radius: 100px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-}
-
-.control-divider {
-    width: 1px;
-    height: 24px;
-    background: var(--border-glass);
-    margin: 0 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    pointer-events: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
 }
 
 .control-btn {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-muted);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
 }
 
 .control-btn svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
+    transition: transform 0.3s ease;
 }
 
 .control-btn:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.15);
     color: white;
+    transform: translateX(-4px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.control-btn:hover svg {
+    transform: scale(1.1);
 }
 
 .control-btn.active {
-    color: var(--gold);
-    background: rgba(232, 185, 83, 0.1);
+    color: var(--dark-bg);
+    background: var(--gold);
+    box-shadow: 0 0 20px rgba(232, 185, 83, 0.4);
+}
+
+.control-btn.active:hover {
+    box-shadow: 0 0 25px rgba(232, 185, 83, 0.6);
 }
 
 /* ==========================================================================
@@ -587,6 +595,94 @@ button {
     font-style: italic;
 }
 
+/* Guide Modal */
+.guide-modal-content {
+    max-width: 700px;
+    padding: 0;
+    background: var(--dark-glass);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+}
+
+.guide-header {
+    background: rgba(255,255,255,0.05);
+    padding: 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.guide-title {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+}
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.guide-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border-bottom: 1px solid var(--border-glass);
+    border-right: 1px solid var(--border-glass);
+}
+
+.guide-item:nth-child(even) {
+    border-right: none;
+}
+
+.guide-item:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+.guide-icon {
+    width: 64px;
+    height: 64px;
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--dark-bg);
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.guide-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.guide-icon.info-style {
+    background: #d35400; /* Matching the orange from screenshot */
+    color: white;
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    font-style: italic;
+    border-radius: 50%;
+}
+
+.guide-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.guide-btn-container {
+    justify-content: center;
+}
+
 /* ==========================================================================
    MODALS (Info & Lightbox)
    ========================================================================== */
@@ -652,17 +748,22 @@ button {
 
 .modal-image-wrapper {
     width: 100%;
-    height: 240px;
+    max-height: 350px;
     background: #111;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #infoImage {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    max-height: 350px;
+    object-fit: contain;
     cursor: zoom-in;
     transition: transform 0.5s ease;
+    display: block;
 }
 
 #infoImage:hover {

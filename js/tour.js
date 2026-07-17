@@ -18,6 +18,8 @@ const infoTitle = document.getElementById("infoTitle");
 const infoDescription = document.getElementById("infoDescription");
 const infoImage = document.getElementById("infoImage");
 const lightboxImage = document.getElementById("lightboxImage");
+const guideModal = document.getElementById("guideModal");
+const btnCloseGuide = document.getElementById("btnCloseGuide");
 
 // Buttons
 const btnStartTour = document.getElementById("btnStartTour");
@@ -163,6 +165,9 @@ btnStartTour.onclick = () => {
     landingPage.style.display = "none";
     tourContainer.style.display = "block";
     
+    // Show Guide Modal
+    guideModal.classList.add("is-active");
+    
     // Show loading overlay temporarily
     const loadingScreen = document.getElementById("loadingScreen");
     loadingScreen.style.visibility = "visible";
@@ -222,4 +227,22 @@ window.onload = () => {
     const loadingScreen = document.getElementById("loadingScreen");
     loadingScreen.style.opacity = "0";
     setTimeout(() => loadingScreen.style.visibility = "hidden", 500);
+}
+
+btnCloseGuide.onclick = () => {
+    guideModal.classList.remove("is-active");
+}
+
+const btnCloseGuideTop = document.getElementById("btnCloseGuideTop");
+if (btnCloseGuideTop) {
+    btnCloseGuideTop.onclick = () => {
+        guideModal.classList.remove("is-active");
+    }
+}
+
+const btnShowGuide = document.getElementById("btnShowGuide");
+if (btnShowGuide) {
+    btnShowGuide.onclick = () => {
+        guideModal.classList.add("is-active");
+    }
 }
