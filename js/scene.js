@@ -146,38 +146,38 @@ const hotspotPositions = {
         next: { yaw: 178.82, pitch: -20 }
     },
     panorama4: {
-        previous: { yaw: 2.87, pitch: -12.18 },
-        next: { yaw: -179.15, pitch: -12.42 }
+        previous: { yaw: 2.87, pitch: -20 },
+        next: { yaw: -179.15, pitch: -20 }
     },
     panorama5: {
-        previous: { yaw: 6.01, pitch: -12.67 },
-        next: { yaw: -88.28, pitch: -12.35 }
+        previous: { yaw: 6.01, pitch: -20 },
+        next: { yaw: -88.28, pitch: -20 }
     },
     panorama6: {
-        previous: { yaw: 81.56, pitch: -12.32 },
-        next: { yaw: -49.72, pitch: -12.99 }
+        previous: { yaw: 81.56, pitch: -20 },
+        next: { yaw: -49.72, pitch: -20 }
     },
     panorama7: {
-        previous: { yaw: 102.42, pitch: -12.25 },
-        next: { yaw: 0, pitch: -12.44 }
+        previous: { yaw: 102.42, pitch: -20 },
+        next: { yaw: 0, pitch: -20 }
     },
     panorama8: {
-        previous: { yaw: -84.54, pitch: -12.33 }
+        previous: { yaw: -84.54, pitch: -20 }
     },
     panorama9: {
-        next: { yaw: -0.93, pitch: -12.57 }
+        next: { yaw: -0.93, pitch: -20 }
     },
     panorama10: {
-        previous: { yaw: 179.20, pitch: -12.35 },
-        next: { yaw: -88.11, pitch: -12.08 }
+        previous: { yaw: 179.20, pitch: -20 },
+        next: { yaw: -88.11, pitch: -20 }
     },
     panorama11: {
-        previous: { yaw: 96.79, pitch: -12.42 },
-        next: { yaw: 0.95, pitch: -12.25 }
+        previous: { yaw: 96.79, pitch: -20 },
+        next: { yaw: 0.95, pitch: -20 }
     },
     panorama12: {
-        previous: { yaw: 178.15, pitch: -12.02 },
-        next: { yaw: -2.56, pitch: -12.23 }
+        previous: { yaw: 178.15, pitch: -20 },
+        next: { yaw: -2.56, pitch: -20 }
     },
     panorama13: {
         previous: { yaw: 0, pitch: -5 }
@@ -191,14 +191,14 @@ const additionalSceneHotspots = {
         {
             sceneId: "panorama9",
             yaw: -179.97,
-            pitch: -12.44
+            pitch: -20
         }
     ],
     panorama9: [
         {
             sceneId: "panorama7",
             yaw: 176.68,
-            pitch: -12.14
+            pitch: -20
         }
     ]
 };
