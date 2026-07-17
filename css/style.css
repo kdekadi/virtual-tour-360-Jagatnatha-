@@ -598,11 +598,13 @@ button {
 /* Guide Modal */
 .guide-modal-content {
     max-width: 700px;
+    max-height: 90vh;
     padding: 0;
     background: var(--dark-glass);
     border: 1px solid var(--border-glass);
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .guide-header {
@@ -833,5 +835,46 @@ button {
     .glass-btn {
         width: 44px;
         height: 44px;
+    }
+    
+    /* Responsive Guide Modal */
+    .guide-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .guide-item {
+        padding: 16px;
+        border-right: none;
+    }
+    
+    .guide-item:nth-last-child(2) {
+        border-bottom: 1px solid var(--border-glass);
+    }
+    
+    .guide-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+    }
+
+    .guide-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .guide-icon.info-style {
+        font-size: 24px;
+    }
+    
+    .guide-text {
+        font-size: 13px;
+    }
+    
+    .guide-title {
+        font-size: 24px;
+    }
+    
+    .guide-header {
+        padding: 16px;
     }
 }
