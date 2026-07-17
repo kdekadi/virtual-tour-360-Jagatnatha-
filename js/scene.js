@@ -135,15 +135,15 @@ const sceneList = [
 
 const hotspotPositions = {
     panorama1: {
-        next: { yaw: 0.65, pitch: -12.62 }
+        next: { yaw: 0.65, pitch: -25 }
     },
     panorama2: {
-        previous: { yaw: -179.69, pitch: -12.68 },
-        next: { yaw: -0.47, pitch: -12.44 }
+        previous: { yaw: -179.69, pitch: -20 },
+        next: { yaw: -0.47, pitch: -20 }
     },
     panorama3: {
-        previous: { yaw: -0.25, pitch: -12.35 },
-        next: { yaw: 178.82, pitch: -12.24 }
+        previous: { yaw: -0.25, pitch: -20 },
+        next: { yaw: 178.82, pitch: -20 }
     },
     panorama4: {
         previous: { yaw: 2.87, pitch: -12.18 },
